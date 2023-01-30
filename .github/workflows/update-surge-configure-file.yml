@@ -28,12 +28,17 @@ jobs:
     - name: Update
       run: |
         python ./main.py -c custom.conf
+        git add surge.conf
+    - name: Generate ruleset
+      run: |
+        sed -i "s#^\.##g" ./surge.conf
+        awk '{print "DOMAIN-SUFFIX,"$0}' surge.conf > surge_gfwlist.list
     - name: Commit files
       run: |
          git config --local user.email "ciaoly@github.com"
          git config --local user.name "ciaoly"
-         git add surge.conf
-         git commit -m "提交新的surge.conf文件, 更新于$(date "+%Y-%m-%d %H:%M:%S")"
+         git add surge_gfwlist.list
+         git commit -m "提交新的surge.conf文件和surge_gfwlist.list文件, 更新于$(date "+%Y-%m-%d %H:%M:%S")"
          
     # 更新至远程github代码仓库中
     - name: Push changes
