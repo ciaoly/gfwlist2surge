@@ -1992,6 +1992,7 @@ DOMAIN-SUFFIX,girlbanker.com
 DOMAIN-SUFFIX,git.io
 DOMAIN-SUFFIX,github.blog
 DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,github.dev
 DOMAIN-SUFFIX,github.io
 DOMAIN-SUFFIX,githubassets.com
 DOMAIN-SUFFIX,githubusercontent.com
@@ -2080,6 +2081,7 @@ DOMAIN-SUFFIX,google.co.kr
 DOMAIN-SUFFIX,google.co.ma
 DOMAIN-SUFFIX,google.co.uk
 DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,google.com.hk
 DOMAIN-SUFFIX,google.de
 DOMAIN-SUFFIX,google.dev
 DOMAIN-SUFFIX,google.dj
