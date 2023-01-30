@@ -1,0 +1,43 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Update surge configure file
+
+on:
+  workflow_dispatch: # 手动触发
+  schedule: # 计划任务触发
+    - cron: '0 9 * * *'
+#  push:
+#    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
+
+permissions:
+  contents: read|write
+
+jobs:
+  update-surge-configure-file:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Update
+      run: |
+        python ./main.py -c custom.conf
+    - name: Commit files
+      run: |
+         git config --local user.email "ciaoly@github.com"
+         git config --local user.name "ciaoly"
+         git add surge.conf
+         git commit -m "提交新的surge.conf文件, 更新于$(date "+%Y-%m-%d %H:%M:%S")"
+         
+    # 更新至远程github代码仓库中
+    - name: Push changes
+      uses:  ad-m/github-push-action@master
+      with:
+         github_token: ${{ secrets.GFWLIST_GIT_KEY }}
+         branch: master
