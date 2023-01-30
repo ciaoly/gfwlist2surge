@@ -5,8 +5,11 @@ name: Update surge configure file
 
 on:
   workflow_dispatch: # 手动触发
-  schedule: # 计划任务触发
-    - cron: '0 9 * * *'
+  schedule: # 每隔5天触发一次
+    - cron: '0 9 */5 * *'
+  push: # 手动添加域名时触发
+    paths:
+      - 'custom.conf'
 #  push:
 #    branches: [ "master" ]
 #  pull_request:
@@ -25,6 +28,9 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+    # 设置服务器时区为东八区 
+    - name: Set time zone
+      run: sudo timedatectl set-timezone 'Asia/Shanghai'
     - name: Update
       run: |
         python ./main.py -c custom.conf
@@ -38,7 +44,7 @@ jobs:
          git config --local user.email "ciaoly@github.com"
          git config --local user.name "ciaoly"
          git add surge_gfwlist.list
-         git commit -m "提交新的surge.conf文件和surge_gfwlist.list文件, 更新于$(date "+%Y-%m-%d %H:%M:%S")"
+         git commit -m "更新于$(date "+%Y-%m-%d %H:%M:%S")"
          
     # 更新至远程github代码仓库中
     - name: Push changes
